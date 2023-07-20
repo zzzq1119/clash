@@ -4,18 +4,6 @@ ipv6: true
 external-controller: 0.0.0.0:9090
 geodata-mode: true
 
-geox-url:
-  geoip: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat"
-  geosite: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat"
-
-tun:
-  enable: true
-  stack: system
-  auto-route: true
-  auto-detect-interface: true
-  dns-hijack:
-    - any:53
-
 dns:
   enable: true
   listen: 127.0.0.1:1053
