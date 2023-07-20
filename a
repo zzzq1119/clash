@@ -10,16 +10,20 @@ geox-url:
 
 tun:
   enable: true
-  stack: gvisor
+  stack: system
+  auto-route: true
+  auto-detect-interface: true
+  dns-hijack:
+    - any:53
 
 dns:
   enable: true
-  listen: 127.0.0.1:53
+  listen: 127.0.0.1:1053
   ipv6: true
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   nameserver:
-    - 192.168.1.1
+    - 127.0.0.1:53
 
 proxy-providers:
   provider:
