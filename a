@@ -1,22 +1,39 @@
-log-level: debug
+log-level: dev
 mode: rule
 ipv6: true
 external-controller: 0.0.0.0:9090
-geodata-mode: true
+find-process-mode: off
+geodata-mode: true 
+geodata-loader: memconservative
+
+geox-url:
+  geoip: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat"
+  geosite: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat"
+
+tun:
+  enable: true
+  stack: gvisor
 
 dns:
   enable: true
-  listen: 127.0.0.1:1053
+  listen: 127.0.0.1:53
   ipv6: true
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
+  nameserver-policy:
+    "rule-set:private": 192.168.1.1
+    "rule-set:icloud": 192.168.1.1
+    "rule-set:apple": 192.168.1.1
+    "rule-set:cn": 192.168.1.1
   nameserver:
-    - 127.0.0.1:53
+    - "8.8.8.8#proxy"
+  proxy-server-nameserver:
+    - 192.168.1.1
 
 proxy-providers:
   provider:
     type: http
-    url: "https://1.xn--xc3ao8r.top/api/v1/client/subscribe?token=d8dae36a43e50bed4b2e5ae7999a11ce"
+    url: "https://api.dler.io/sub?target=clash&new_name=true&url=https%3A%2F%2F1.xn--xc3ao8r.top%2Fapi%2Fv1%2Fclient%2Fsubscribe%3Ftoken%3Dd8dae36a43e50bed4b2e5ae7999a11ce&insert=false&config=https%3A%2F%2Fraw.githubusercontent.com%2FACL4SSR%2FACL4SSR%2Fmaster%2FClash%2Fconfig%2FACL4SSR_Online.ini&list=true&tfo=false&scv=false&fdn=true&sort=true&udp=true"
     path: ./provider.yaml
     interval: 360
     health-check:
@@ -32,15 +49,40 @@ proxy-groups:
     use:
       - provider
 
+rule-providers:
+  cn:
+    type: http
+    behavior: domain
+    path: ./cn.yaml
+    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt"
+    interval: 600
+
+  apple:
+    type: http
+    behavior: domain
+    path: ./apple.yaml
+    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/apple.txt"
+    interval: 600
+
+  icloud:
+    type: http
+    behavior: domain
+    path: ./icloud.yaml
+    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/icloud.txt"
+    interval: 600
+
+  private:
+    type: http
+    behavior: domain
+    path: ./private.yaml
+    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/private.txt"
+    interval: 600
+
 rules:
-  - GEOSITE,category-games@cn,DIRECT
-  - GEOSITE,microsoft@cn,DIRECT
-  - GEOSITE,icloud@cn,DIRECT
-  - GEOSITE,apple-cn,DIRECT
-  - GEOSITE,private,DIRECT
-  - GEOSITE,tld-cn,DIRECT
+  - RULE-SET,private,DIRECT
+  - RULE-SET,icloud,DIRECT
+  - RULE-SET,apple,DIRECT
+  - RULE-SET,cn,DIRECT
   - GEOSITE,geolocation-!cn,proxy
-  - GEOSITE,cn,DIRECT
-  - GEOIP,private,DIRECT,no-resolve
-  - GEOIP,cn,DIRECT,no-resolve
-  - MATCH,proxy
+  - GEOIP,!cn,proxy
+  - MATCH,DIRECT
