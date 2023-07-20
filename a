@@ -5,50 +5,50 @@ external-controller: 0.0.0.0:9090
 geodata-mode: true
 
 geox-url:
-geoip: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat"
-geosite: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat"
+  geoip: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat"
+  geosite: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat"
 
 tun:
-enable: true
-stack: gvisor
+  enable: true
+  stack: gvisor
 
 dns:
-enable: true
-listen: 127.0.0.1:53
-ipv6: true
-enhanced-mode: fake-ip
-fake-ip-range: 198.18.0.1/16
-nameserver:
-- 192.168.1.1
+  enable: true
+  listen: 127.0.0.1:53
+  ipv6: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  nameserver:
+    - 192.168.1.1
 
 proxy-providers:
-provider:
-type: http
-url: "https://1.xn--xc3ao8r.top/api/v1/client/subscribe?token=d8dae36a43e50bed4b2e5ae7999a11ce"
-path: ./provider.yaml
-interval: 360
-health-check:
-enable: true
-url: https://www.gstatic.com/generate_204
-interval: 300
+  provider:
+    type: http
+    url: "https://1.xn--xc3ao8r.top/api/v1/client/subscribe?token=d8dae36a43e50bed4b2e5ae7999a11ce"
+    path: ./provider.yaml
+    interval: 360
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 300
 
 proxy-groups:
-- name: "proxy"
-type: url-test
-url: 'https://www.gstatic.com/generate_204'
-interval: 30
-use:
-- provider
+  - name: "proxy"
+    type: url-test
+    url: 'https://www.gstatic.com/generate_204'
+    interval: 30
+    use:
+      - provider
 
 rules:
-- GEOSITE,category-games@cn,DIRECT
-- GEOSITE,microsoft@cn,DIRECT
-- GEOSITE,icloud@cn,DIRECT
-- GEOSITE,apple-cn,DIRECT
-- GEOSITE,private,DIRECT
-- GEOSITE,tld-cn,DIRECT
-- GEOSITE,geolocation-!cn,proxy
-- GEOSITE,cn,DIRECT
-- GEOIP,private,DIRECT,no-resolve
-- GEOIP,cn,DIRECT,no-resolve
-- MATCH,proxy
+  - GEOSITE,category-games@cn,DIRECT
+  - GEOSITE,microsoft@cn,DIRECT
+  - GEOSITE,icloud@cn,DIRECT
+  - GEOSITE,apple-cn,DIRECT
+  - GEOSITE,private,DIRECT
+  - GEOSITE,tld-cn,DIRECT
+  - GEOSITE,geolocation-!cn,proxy
+  - GEOSITE,cn,DIRECT
+  - GEOIP,private,DIRECT,no-resolve
+  - GEOIP,cn,DIRECT,no-resolve
+  - MATCH,proxy
