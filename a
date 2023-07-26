@@ -22,48 +22,8 @@ proxy-groups:
     use:
       - provider
 
-rule-providers:
-  cn:
-    type: http
-    behavior: domain
-    path: ./cn.yaml
-    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt"
-    interval: 600
-
-  apple:
-    type: http
-    behavior: domain
-    path: ./apple.yaml
-    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/apple.txt"
-    interval: 600
-
-  icloud:
-    type: http
-    behavior: domain
-    path: ./icloud.yaml
-    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/icloud.txt"
-    interval: 600
-
-  private:
-    type: http
-    behavior: domain
-    path: ./private.yaml
-    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/private.txt"
-    interval: 600
-
-  proxy:
-    type: http
-    behavior: domain
-    path: ./private.yaml
-    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt"
-    interval: 600
-
 rules:
-  - RULE-SET,private,DIRECT
-  - RULE-SET,icloud,DIRECT
-  - RULE-SET,apple,DIRECT
-  - RULE-SET,proxy,proxy
-  - RULE-SET,cn,DIRECT
-  - GEOIP,private,DIRECT,no-resolve
-  - GEOIP,cn,DIRECT,no-resolve
-  - MATCH,proxy
+  - GEOSITE,category-ads-all,REJECT
+  - GEOSITE,geolocation-!cn,proxy
+  - GEOIP,!cn,proxy,no-resolve
+  - MATCH,DIRECT
